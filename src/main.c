@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 01:51:37 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/04/20 23:30:26 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:47:50 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,3 +18,4 @@ int	main(int argc, char **argv)
 		init_all(argv);
 	return (0);
 }
+

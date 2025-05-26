@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 01:45:42 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/05/20 19:51:29 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:52:41 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int		validate_args(int argc, char **argv);
 long	get_current_time(void);
 void	cleanup_sim(t_sim *sim, int i);
 void	init_all(char **argv);
-
+void	*checker(void *arg);
+int		philos_checker(t_sim *sim, t_philo *philo);
+int		check_all_ate(t_sim *sim, int all_ate);
+int		check_if_died(t_sim *sim, t_philo *philo, int i, long time_last_meal);
 
 
 #endif
