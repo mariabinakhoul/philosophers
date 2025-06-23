@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:20:24 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/05/26 19:41:44 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:30:05 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ void	init_all(char **argv)
 	init_philos(philos, sim);
 	sim->philos = philos;
 	sim->start_time = get_current_time();
-	// if (sim->philos_count == 1)
-	// {
-	// 	log_state(&philos[0], "has taken a fork");
-	// 	accurate_sleep(sim->time_to_die);
-	// 	clean(philos, sim);
-	// 	exit(0);
-	// }
-	// start_simulation(sim, philos);
-	// join_threads(sim, philos);
+	if (sim->philos_count == 1)
+	{
+		log_state(&philos[0], "has taken a fork");
+		accurate_sleep(sim->time_to_die);
+		clean(philos, sim);
+		exit(0);
+	}
+	start_simulation(sim, philos);
+	join_threads(sim, philos);
 }

@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 01:45:42 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/05/26 19:52:41 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:56:20 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	state_mutex; //mutex to protect philosopher state
 	pthread_t		thread; //philosopher's thread
+	struct s_sim	*sim;
 }	t_philo;
 
 
@@ -51,6 +52,9 @@ int		ft_atoi(const char *str);
 int		validate_args(int argc, char **argv);
 long	get_current_time(void);
 void	cleanup_sim(t_sim *sim, int i);
+void	precise_sleep(long duration_ms);
+void	print_philo_status(t_philo *philo, const char *status);
+void	free_resources(t_sim *sim, t_philo *philos);
 void	init_all(char **argv);
 void	*checker(void *arg);
 int		philos_checker(t_sim *sim, t_philo *philo);

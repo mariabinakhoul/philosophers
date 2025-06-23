@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 01:51:37 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/05/26 19:47:50 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:29:28 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@ int	main(int argc, char **argv)
 {
 	if (validate_args(argc, argv))
 		init_all(argv);
+	else
+	{
+		printf("You need to enter these arguments ");
+		printf("(the last one is not a must):\n");
+		printf("number_of_philosophers time_to_die time_to_eat ");
+		printf("time_to_sleep number_of_times_each_philosopher_must_eat\n");
+		return (1);
+	}
 	return (0);
 }
 
