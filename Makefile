@@ -1,6 +1,6 @@
 NAME = philo
 
-SRCS = main validate init utils checker
+SRCS = main validate init utils checker simulation routine eat_handler
 
 SRC = $(addsuffix .c, $(addprefix src/, $(SRCS)))
 

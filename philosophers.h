@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 01:45:42 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/06/23 16:56:20 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:42:34 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ void	*checker(void *arg);
 int		philos_checker(t_sim *sim, t_philo *philo);
 int		check_all_ate(t_sim *sim, int all_ate);
 int		check_if_died(t_sim *sim, t_philo *philo, int i, long time_last_meal);
-
+void	start_simulation(t_sim *sim, t_philo *philos);
+void	*philosopher_routine(void *arg);
+void	take_forks(t_philo *philo);
+void	release_forks(t_philo *philo);
+void	join_philosopher_threads(t_sim *sim, t_philo *philos);
 
 #endif
