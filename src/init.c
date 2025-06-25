@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:20:24 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/06/23 18:43:07 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:17:39 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	init_sim(t_sim *sim, char **argv)
 	int	i;
 
 	i = -1;
+	sim->all_alive = 1;
 	sim->philos_count = ft_atoi(argv[1]);
 	sim->time_to_die = ft_atoi(argv[2]);
 	sim->time_to_eat = ft_atoi(argv[3]);
@@ -36,9 +37,10 @@ static void	init_sim(t_sim *sim, char **argv)
 			exit (1);
 		}
 	}
-	sim->philos = (t_philo *)malloc(sizeof(t_philo) * sim->philos_count);
+	sim->philos = malloc(sizeof(pthread_mutex_t) * sim->philos_count);
 	sim->start_time = get_current_time();
 	pthread_mutex_init(&sim->log_mutex, NULL);
+	pthread_mutex_init(&sim->alive_mutex, NULL);
 }
 
 static void	init_philos(t_philo *philos, t_sim *sim)
@@ -50,14 +52,68 @@ static void	init_philos(t_philo *philos, t_sim *sim)
 	{
 		philos[i].id = i + 1;
 		philos[i].meals_eaten = 0;
-		philos[i].left_fork = &sim->forks[i];
-		philos[i].right_fork = &sim->forks[(i + 1) % sim->philos_count];
+		if (i % 2 == 0)
+		{
+			philos[i].left_fork = &sim->forks[i];
+			philos[i].right_fork = &sim->forks[(i + 1) % sim->philos_count];
+		}
+		else
+		{
+			philos[i].right_fork = &sim->forks[i];
+			philos[i].left_fork = &sim->forks[(i + 1) % sim->philos_count];
+		}
 		philos[i].last_meal_time = sim->start_time;
+		philos[i].sim = sim;
 		pthread_mutex_init(&philos[i].state_mutex, NULL);
 		philos[i].thread = 0;
 		i++;
 	}
 }
+
+// void	init_all(char **argv)
+// {
+// 	t_philo	*philos;
+// 	t_sim	*sim;
+
+// 	sim = (t_sim *)malloc(sizeof(t_sim));
+// 	if (!sim)
+// 	{
+// 		printf("Failed to allocate memory for simulation\n");
+// 		return ;
+// 	}
+// 	init_sim(sim, argv);
+// 	philos = (t_philo *)malloc(sizeof(t_philo) * sim->philos_count);
+// 	if (!philos)
+// 	{
+// 		printf("Failed to allocate memory for philosophers");
+// 		cleanup_sim(sim, sim->philos_count);
+// 		return ;
+// 	}
+// 	init_philos(philos, sim);
+// 	sim->philos = philos;
+// 	sim->start_time = get_current_time();
+// 	if (sim->philos_count == 1)
+// 	{
+// 		print_philo_status(&philos[0], "has taken a fork");
+// 		precise_sleep(sim->time_to_die, philos);
+
+// 		pthread_mutex_lock(&sim->alive_mutex);
+// 		sim->all_alive = 0;
+// 		pthread_mutex_unlock(&sim->alive_mutex);
+
+// 		pthread_mutex_lock(&sim->log_mutex);
+// 		printf("%ld %d died\n", get_current_time() - sim->start_time,
+// 			philos[0].id);
+// 		pthread_mutex_unlock(&sim->log_mutex);
+
+// 		free_resources(sim, philos);
+// 		exit(0);
+// 	}
+
+// 	start_simulation(sim, philos);
+// 	join_philosopher_threads(sim, philos);
+// 	free_resources(sim, philos);
+// }
 
 void	init_all(char **argv)
 {
@@ -81,13 +137,23 @@ void	init_all(char **argv)
 	init_philos(philos, sim);
 	sim->philos = philos;
 	sim->start_time = get_current_time();
+
 	if (sim->philos_count == 1)
 	{
 		print_philo_status(&philos[0], "has taken a fork");
 		precise_sleep(sim->time_to_die);
+		pthread_mutex_lock(&sim->alive_mutex);
+		sim->all_alive = 0;
+		pthread_mutex_unlock(&sim->alive_mutex);
+		pthread_mutex_lock(&sim->log_mutex);
+		printf("%ld %d died\n", get_current_time() - sim->start_time,
+			philos[0].id);
+		pthread_mutex_unlock(&sim->log_mutex);
 		free_resources(sim, philos);
 		exit(0);
 	}
+
 	start_simulation(sim, philos);
 	join_philosopher_threads(sim, philos);
+	// free_resources(sim, philos);
 }
