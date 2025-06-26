@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 01:45:42 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/06/25 17:07:44 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/06/26 13:12:30 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,13 @@ typedef struct s_philo
 {
 	int				id;
 	int				meals_eaten;
-	long			last_meal_time; //last meal time stamp
+	long			last_meal_time;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	state_mutex; //mutex to protect philosopher state
-	pthread_t		thread; //philosopher's thread
+	pthread_mutex_t	state_mutex;
+	pthread_t		thread;
 	struct s_sim	*sim;
 }	t_philo;
-
 
 typedef struct s_sim
 {
@@ -41,11 +40,11 @@ typedef struct s_sim
 	int				time_to_sleep;
 	int				meals_required;
 	int				all_alive;
-	long			start_time; //simulation start time
-	pthread_mutex_t	*forks; //array of fork mutexes
-	pthread_mutex_t	log_mutex; //mutex for logging access
+	long			start_time;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	log_mutex;
 	pthread_mutex_t	alive_mutex;
-	t_philo			*philos; //array of philosopher structs
+	t_philo			*philos;
 }	t_sim;
 
 int		ft_atoi(const char *str);

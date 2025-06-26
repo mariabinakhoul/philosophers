@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:46:53 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/06/25 17:04:27 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:11:10 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@ long	get_current_time(void)
 
 void	cleanup_sim(t_sim *sim, int i)
 {
-	while (i > 0)
-		pthread_mutex_destroy(&sim->forks[--i]);
+	while (i < sim->philos_count)
+	{
+		pthread_mutex_destroy(&sim->forks[i]);
+		i++;
+	}
 	free(sim->forks);
+	exit(EXIT_FAILURE);
 }
 
 void	precise_sleep(long duration_ms)
@@ -41,7 +45,6 @@ void	precise_sleep(long duration_ms)
 		usleep(500);
 	}
 }
-
 
 void	print_philo_status(t_philo *philo, const char *status)
 {
