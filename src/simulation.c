@@ -6,7 +6,7 @@
 /*   By: mabi-nak <mabi-nak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:17:42 by mabi-nak          #+#    #+#             */
-/*   Updated: 2025/06/25 17:17:47 by mabi-nak         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:18:13 by mabi-nak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	join_philosopher_threads(t_sim *sim, t_philo *philos)
 
 	i = 0;
 	while (i < sim->philos_count)
-	{
-		pthread_join(philos[i].thread, NULL);
-		i++;
-	}
+		pthread_join(philos[i++].thread, NULL);
 	free_resources(sim, philos);
 }
 
